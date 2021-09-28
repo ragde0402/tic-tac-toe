@@ -50,12 +50,14 @@ class game():
             self.player2.sign = "O"
 
     def turn(self, player):
-        self.round += 1
         if player.auto == False:
             self.field = input(f"{player.name} select a field(e.g. A1): ").upper()
             self.pick = [a for a in self.field]
         else:
-            self.field = choice(self.all_fields)
+            if self.board["B"][2] == " ":
+                self.field = "B2"
+            else:
+                self.field = choice(self.all_fields)
             self.pick = [a for a in self.field]
         try:
             if self.board[self.pick[0]][int(self.pick[1])] == " ":
@@ -75,7 +77,7 @@ class game():
                     print(f"{player.name} win.")
                     return True
 
-        if self.round == 9:
+        if self.round >= 9:
             print("Game tied.")
             self.winner = True
             return True
@@ -94,6 +96,7 @@ while not game.winner:
     for x in range(2):
         printing_board(game)
         game.turn(game.list_of_players[x])
+        game.round += 1
         if game.end_game():
             printing_board(game)
             break
