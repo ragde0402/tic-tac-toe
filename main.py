@@ -1,6 +1,7 @@
 from random import sample, choice
 
-class player():
+
+class Player():
 
     def __init__(self, num):
         self.name = f"player {num}"
@@ -13,14 +14,14 @@ class player():
         self.sign = self.new_sign
 
 
-class game():
+class Game():
 
     def __init__(self):
         self.board = {"A": {1: " ", 2: " ", 3: " "},
                       "B": {1: " ", 2: " ", 3: " "},
                       "C": {1: " ", 2: " ", 3: " "}}
-        self.player1 = player(1)
-        self.player2 = player(2)
+        self.player1 = Player(1)
+        self.player2 = Player(2)
         self.list_of_players = sample([self.player1, self.player2], 2)
         self.win = {1: ["A1", "A2", "A3"],
                     2: ["B1", "B2", "B3"],
@@ -30,7 +31,7 @@ class game():
                     6: ["C3", "B3", "A3"],
                     7: ["A1", "B2", "C3"],
                     8: ["C1", "B2", "A3"],
-        }
+                    }
         self.all_fields = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
         self.round = 0
         self.winner = False
@@ -50,7 +51,7 @@ class game():
             self.player2.sign = "O"
 
     def turn(self, player):
-        if player.auto == False:
+        if not player.auto:
             self.field = input(f"{player.name} select a field(e.g. A1): ").upper()
             self.pick = [a for a in self.field]
         else:
@@ -84,12 +85,14 @@ class game():
 
         print("Next round")
 
+
 def printing_board(class_):
     print(f"A   {class_.board['A'][1]} | {class_.board['A'][2]} | {class_.board['A'][3]}\n   ------------\n"
-              f"B   {class_.board['B'][1]} | {class_.board['B'][2]} | {class_.board['B'][3]}\n   ------------\n"
-              f"C   {class_.board['C'][1]} | {class_.board['C'][2]} | {class_.board['C'][3]}")
+          f"B   {class_.board['B'][1]} | {class_.board['B'][2]} | {class_.board['B'][3]}\n   ------------\n"
+          f"C   {class_.board['C'][1]} | {class_.board['C'][2]} | {class_.board['C'][3]}")
 
-game = game()
+
+game = Game()
 game.creating_players_in_game()
 
 while not game.winner:
